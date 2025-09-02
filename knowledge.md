@@ -50,3 +50,6 @@
 对于上述写法中的name后面的规则，我们如何知道写什么？
 答：对于上述的Path、Query，我们要知道name后面都是PathRoutePredicateFactory类似的Route前的短语构成。
 所以我们可以直接搜索RoutePredicateFactory（断言工厂），然后ctrl+h找到它的子类即可。
+
+**Q10:微服务之间的调用经过网关吗？**
+答：不经过网关。那如何经过网关呢？将@FeignClient(value="改成网关的服务名")，要注意路径！！！！！

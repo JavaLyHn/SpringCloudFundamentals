@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/order")
+//@RequestMapping("/api/order")
 @RefreshScope //配置属性的自动刷新
 @RestController
 public class OrderController {

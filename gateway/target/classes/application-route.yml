@@ -9,11 +9,16 @@ spring:
               args:
                 patterns: /apr/order/**
                 matchTrailingSlash: true
-          order: 0 #数字越小优先级越高
+          order: 1 #数字越小优先级越高
+          filters: #/api/order/ab/c -> /ab/c
+            - RewritePath=/api/order?(?<segment>.*),/$\{segment}
+            - OnceToken=X-Response-Token,uuid
         - id: product-route
           uri: lb://service-product
           predicates:
             - Path=/api/product/**
+          filters:
+            - RewritePath=/api/product?(?<segment>.*),/$\{segment}
         - id: bing-route
           uri: https://cn.bing.com
           predicates:
@@ -29,3 +34,5 @@ spring:
               args:
                 param: user
                 value: lyhn
+      default-filters:
+        - AddResponseHeader=X-Response-Abc,123 #默认filter
