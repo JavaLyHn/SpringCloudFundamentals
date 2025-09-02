@@ -1,6 +1,7 @@
 package com.cloud.order.service.impl;
 
 import com.cloud.order.bean.Order;
+import com.cloud.order.feign.ProductFeignClient;
 import com.cloud.order.service.OrderService;
 import com.cloud.product.bean.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +27,14 @@ public class OrderServiceImpl implements OrderService {
     LoadBalancerClient loadBalancerClient;
 
     @Autowired
+    ProductFeignClient productFeignClient;
+
+    @Autowired
     RestTemplate restTemplate;
     @Override
     public Order createOrder(Long productId, Long userId) {
-        Product product = getProductFromRemote(productId);
+//        Product product = getProductFromRemote(productId);
+        Product product = productFeignClient.getProductById(productId);
         Order order = new Order();
         order.setId(productId);
         order.setUserId(userId);

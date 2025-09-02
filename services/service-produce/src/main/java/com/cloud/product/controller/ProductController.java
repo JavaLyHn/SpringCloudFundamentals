@@ -2,6 +2,7 @@ package com.cloud.product.controller;
 
 import com.cloud.product.bean.Product;
 import com.cloud.product.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,10 @@ public class ProductController {
 
     //查询商品
     @GetMapping("/product/{id}")
-    public Product getProduct(@PathVariable("id") Long productId){
+    public Product getProduct(@PathVariable("id") Long productId,
+                              HttpServletRequest request){
+        String header = request.getHeader("X-Token");
+        System.out.println("header:"+header);
         Product product = productService.getProductById(productId);
         return product;
     }
