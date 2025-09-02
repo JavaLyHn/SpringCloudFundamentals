@@ -31,3 +31,22 @@
 **Q8:Sentinel异常处理的规则**
 答：![img_7.png](img_7.png)
 注意：兜底处理很重要！！！！！
+
+**Q9:网关过滤流程**
+答：![img_8.png](img_8.png)
+
+**Q10:网关长写法的注意事项。**
+答：- id: bing-route
+        uri: https://cn.bing.com
+        predicates:
+              - name: Path
+                    args:
+                        patterns: /search
+                        matchTrailingSlash: true
+              - name: Query
+                    args:
+                        param: q
+                        regexp: haha
+对于上述写法中的name后面的规则，我们如何知道写什么？
+答：对于上述的Path、Query，我们要知道name后面都是PathRoutePredicateFactory类似的Route前的短语构成。
+所以我们可以直接搜索RoutePredicateFactory（断言工厂），然后ctrl+h找到它的子类即可。

@@ -6,15 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="service-order" />
         <module name="service-produce" />
         <module name="model" />
+        <module name="service-order" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Cloud-Fundamentals" options="" />
+      <module name="gateway" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="service-order" options="-parameters" />
       <module name="service-produce" options="-parameters" />

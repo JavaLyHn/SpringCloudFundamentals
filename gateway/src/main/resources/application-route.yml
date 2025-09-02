@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: order-route
+          uri: lb://service-order
+          predicates:
+            - name: Path
+              args:
+                patterns: /apr/order/**
+                matchTrailingSlash: true
+          order: 0 #数字越小优先级越高
+        - id: product-route
+          uri: lb://service-product
+          predicates:
+            - Path=/api/product/**
+        - id: bing-route
+          uri: https://cn.bing.com
+          predicates:
+            - name: Path
+              args:
+                patterns: /search
+                matchTrailingSlash: true
+            - name: Query
+              args:
+                param: q
+                regexp: haha
+            - name: Vip
+              args:
+                param: user
+                value: lyhn
