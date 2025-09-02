@@ -1,5 +1,8 @@
 package com.cloud.order.service.impl;
 
+import com.alibaba.csp.sentinel.SphU;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.cloud.order.bean.Order;
 import com.cloud.order.feign.ProductFeignClient;
 import com.cloud.order.service.OrderService;
@@ -31,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @SentinelResource(value = "createOrder",blockHandler = "createOrderFallback")
     @Override
     public Order createOrder(Long productId, Long userId) {
 //        Product product = getProductFromRemote(productId);
@@ -45,6 +50,24 @@ public class OrderServiceImpl implements OrderService {
         //远程查询商品列表
         order.setProductList(Arrays.asList(product));
         return order;
+    }
+
+    public Order createOrderFallback(Long productId, Long userId, BlockException e) {
+        Order order = new Order();
+        order.setId(productId);
+        order.setUserId(userId);
+        order.setTotalAmount(new BigDecimal(0));
+        order.setNickName("未知用户");
+        order.setAddress("未知地区" + e.getMessage());
+
+//        try {
+//            SphU.entry("haha");
+//        } catch (BlockException ex) {
+//            throw new RuntimeException(ex);
+//        }
+
+        return order;
+
     }
 
     private Product getProductFromRemote(Long productId) {
