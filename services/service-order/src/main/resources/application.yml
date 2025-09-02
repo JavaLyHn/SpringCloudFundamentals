@@ -1,0 +1,39 @@
+server:
+  port: 8000
+spring:
+  profiles:
+    active: test
+  application:
+    name: service-order
+  cloud:
+    nacos:
+      server-addr: 192.168.255.128:8848
+      config:
+        #若不配置spring.profiles.active 则默认使用冒号后面的public
+        namespace: ${spring.profiles.active:public}
+        import-check:
+          enabled: false
+---
+spring:
+  config:
+    import:
+      - nacos:common.properties?group=order
+      - nacos:database.properties?group=order
+    activate:
+      on-profile: dev
+---
+spring:
+  config:
+    import:
+      - nacos:common.properties?group=order
+      - nacos:database.properties?group=order
+    activate:
+      on-profile: test
+---
+spring:
+  config:
+    import:
+      - nacos:common.properties?group=order
+      - nacos:database.properties?group=order
+    activate:
+      on-profile: prod
