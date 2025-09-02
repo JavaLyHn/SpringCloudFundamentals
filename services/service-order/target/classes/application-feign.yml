@@ -13,6 +13,7 @@ spring:
       transport:
         dashboard: localhost:8080
       eager: true
+      web-context-unify: false #关闭统一上下文 用于链路流量控制
 #            retryer:
 #            response-interceptor: com.cloud.order.interceptor.TokenRequestInterceptor
 feign:
